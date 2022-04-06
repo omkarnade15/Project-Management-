@@ -1,0 +1,69 @@
+﻿@model LPLProject.Models.AddEmployee
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/knockout-3.5.1.js"></script>
+<script src="~/Scripts/knockout.mapping-latest.js"></script>
+<script src="~/Scripts/App/employee.js"></script>
+<script>    
+   
+    var modelCreate = {
+        emp_ID: ko.observable(),
+        first_Name: ko.observable(),
+        last_Name: ko.observable(),
+        createemloyee: function () {
+            try {
+                $.ajax({
+                    url: '/Employees/Create',
+                    type: 'post',
+                    dataType: 'json',
+                    data: ko.toJSON(this), //Here the data wil be converted to JSON  
+                    contentType: 'application/json',
+                    success: successCallback,
+                    error: errorCallback
+                });
+            } catch (e) {
+                window.location.href = '/Home/Read/';
+            }
+            $(function () {
+                ko.applyBindings(modelCreate);
+            });
+        }
+
+
+        
+    };  
+    </script>>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2" for="emp_ID"> EMP ID </label>
+        <div class="col-md-10">
+            <input class="form-control text-box single-line" id="CourseName"
+                   name="CourseName"
+                   type="text"
+                   value=""
+                   data - bind="value: emp_ID">
+        </div>
+        <label class="control-label col-md-2" for="emp_ID"> First Name </label>
+        <div class="col-md-10">
+            <input class="form-control text-box single-line" id="firstname"
+                   name="firstname"
+                   type="text"
+                   value=""
+                   data - bind="value: first_Name">
+        </div>
+        <label class="control-label col-md-2" for="emp_ID"> Last Name </label>
+        <div class="col-md-10">
+            <input class="form-control text-box single-line" id="firstname"
+                   name="firstname"
+                   type="text"
+                   value=""
+                   data - bind="value: last_Name">
+        </div>
+        <input type="button"
+               data - bind="click: createemloyee"
+               value="Create"
+               class="btn btn-default">
+
+
+    </div>
+</div>

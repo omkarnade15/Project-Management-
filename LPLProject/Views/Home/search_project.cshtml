@@ -1,0 +1,270 @@
+﻿@model IEnumerable<LPLProject.Models.Project>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title class="jumbotron text-center tex">search_project</title>
+    @*<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css">*@
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/myscript.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+    body { background: url("https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"); }
+    #heading { background: url("https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"); }
+
+        .search {
+            padding: 20px;
+        }
+
+        #searchby {
+            color: red;
+            font-size: larger;
+        }
+
+        .lables {
+            font: italic;
+        }
+
+        /* .table {
+            border: 3px solid red;
+            padding-top: 50px;
+            padding-right: 50px;
+            padding-bottom: 50px;
+            padding-left: 50px;
+        }*/
+
+        .searchnew {
+            width: 130px;
+            height: 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+
+            .searchnew:focus {
+                width: 60%;
+            }
+
+        #show {
+            float: left;
+            width: 20%;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            font-size: 17px;
+            border: 1px solid grey;
+            border-left: none; /* Prevent double borders */
+            cursor: pointer;
+        }
+
+            #show :hover {
+                background: #0b7dda;
+            }
+        /*   .radio-inline{
+            border-radius:6px;
+        }*/
+        #asach {
+            margin-left: 290px;
+            display: none;
+        }
+
+        #asach {
+            -webkit-appearance: none;
+            background-color: white;
+            border: 4px solid #e1e1e1;
+            border-radius: 10px;
+            width: 100%;
+            display: inline-block;
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+
+            #asach:checked {
+                background: red;
+                border: 4px solid #e1e1e1;
+            }
+
+        text {
+            height: 40px;
+            width: 40px;
+            font-size: larger;
+        }
+
+        .labels {
+            position: relative;
+            left: 210px;
+            font-size: 40px;
+            color: aqua;
+        }
+
+        #label2 {
+            margin-left: 75px;
+        }
+
+        #label3 {
+            margin-left: 60px;
+        }
+
+        .text-capitalize {
+            font-size: 45px;
+            color: lime;
+        }
+
+        .text-success {
+            font-size: 20px;
+            color: yellow;
+        }
+
+        #searchby {
+            font-size: 40px;
+            color: darkblue;
+        }
+
+        #table {
+            background-color: white;
+        }
+        #table {
+            border-collapse: separate;
+            border-spacing: 50px 0;
+        }
+
+        td {
+            padding: 10px 0;
+        }
+        .myclass {
+            font-size:25px;
+            color:brown;
+        }
+        .myvalues {
+            font-size: 19px;
+            color:royalblue;
+        }
+    </style>>
+</head>
+
+<body class="search">
+    <center>
+        <div class="jumbotron text-center tex" id="heading">
+            <h2 class="text-capitalize text-danger">Search Project</h2>
+            <p class="text-success"><u>Here you can search and edit Project.</u></p>
+        </div>
+    </center>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Log Out", "logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Add Project", "add_project", "Home")</li>
+                    <li>@Html.ActionLink("Add User", "Partial_View", "Home")</li>
+                    <li>@Html.ActionLink("Add Task", "add_task", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <p class="search" id="search">
+        @using (@Html.BeginForm("search_project", "Home", FormMethod.Get))
+        {
+            <b id="searchby" style="font:italic;">Search By:Please select the option you want to search By.</b><br>
+            <label class="labels"> Project Name</label><label class="labels" id="label2"> Manager Name</label><label class="labels" id="label3"> Start Date</label>
+            <br><br>
+
+            @Html.RadioButton("searchBy", "Name", true, new { @class = "radioinline", @id = "asach" })
+            @Html.RadioButton("searchBy", "manager", new { @class = "radioinline", @id = "asach" })
+            @Html.RadioButton("searchBy", "startdate", new { @class = "radioinline", @id = "asach" })
+            <br><br>
+            @Html.TextBox("search", null, new { @class = "searchnew" })
+            <input type="submit" value="Search" id="show" /><i class="fa fa-search"></i>
+        }
+    </p><br><br><br><br><br>
+    <table id="table" class="table-bordered table-striped">
+        <tr class="table-success">
+            <th scope="col" style="font-size:15px;">
+                <span class="myclass">  @Html.DisplayNameFor(model => model.Project_name)</span>
+            </th>
+            <th scope="col" style="font-size:15px;">
+                <span class="myclass"> @Html.DisplayNameFor(model => model.Start_date)</span>
+            </th>
+            <th scope="col" style="font-size:15px;">
+                <span class="myclass">  @Html.DisplayNameFor(model => model.End_date)</span>
+            </th>
+            <th scope="col">
+                <span class="myclass"> @Html.DisplayNameFor(model => model.Priority)</span>
+            </th>
+            <th scope="col">
+                <span class="myclass"> @Html.DisplayNameFor(model => model.Manager)</span>
+            </th>
+            <th scope="col">
+                <span class="myclass"> @Html.DisplayNameFor(model => model.number_of_Tasks)</span>
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>*@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr scope="row" class="table-danger">
+                <td>
+                    <span class="myvalues">  @Html.DisplayFor(modelItem => item.Project_name)</span>
+                </td>
+                <td>
+                    <span class="myvalues"> @Html.DisplayFor(modelItem => item.Start_date)</span>
+                </td>
+                <td>
+                    <span class="myvalues"> @Html.DisplayFor(modelItem => item.End_date)</span>
+                </td>
+                <td>
+                    <span class="myvalues"> @Html.DisplayFor(modelItem => item.Priority)</span>
+                </td>
+                <td>
+                    <span class="myvalues">   @Html.DisplayFor(modelItem => item.Manager)</span>
+                </td>
+                <td>
+                    <span class="myvalues"> @Html.DisplayFor(modelItem => item.number_of_Tasks)</span>
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Update", "edit_details", new { id = item.Project_name }) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Project_name }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Project_name })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+
+</body>
+</html>

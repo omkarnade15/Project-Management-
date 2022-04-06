@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = "";
+    ViewBag.Title = "Unit Tests";
+}
+ 
+<link href="~/Content/qunit.css" rel="stylesheet" type="text/css" />
+<h1 id="qunit-header">Unit Tests</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+ 
+<script src="@Url.Content("~/Scripts/qunit.js")" type="text/JavaScript"></script>
+<script type="text/JavaScript">
+    test("strings are equal", function () {
+        var expected = "hello world";
+        var result = "hello world";
+        ok(result == expected, "Strings are equal!");
+    });
+
+    test("numbers are equal", function () {
+        var expected = 1;
+        var result = 1;
+        ok(result == expected, "Numbers are equal!");
+    });
+
+    test("test should fail", function () {
+        var expected = 1;
+        var result = 2;
+        ok(result == expected, "Numbers are equal!");
+    });
+</script>
+

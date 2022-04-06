@@ -1,0 +1,80 @@
+﻿@model IEnumerable<LPLProject.Models.Task>
+
+@{
+    ViewBag.Title = "add_task_project";
+}
+
+<h2 style="text-align:center;"> Add Task To Project</h2>
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/css/bootstrap.css" rel="stylesheet" />
+
+<style>
+    .labels {
+        font-size: 18px;
+        color: indianred;
+    }
+
+    .values {
+        color: brown;
+        font-size: 14px;
+    }
+</style>
+<table class="table table-bordered table-striped">
+    <tr class="labels">
+        <th>
+            @Html.DisplayNameFor(model => model.Project_tname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.start_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.end_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.priority)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.task_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.parent_task)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="values">
+            <td>
+                @Html.DisplayFor(modelItem => item.Project_tname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.end_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.priority)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.task_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.parent_task)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>*@
+        <td>
+            @Html.ActionLink("Update Task", "update_task", new { id = item.task_ID }) |
+          
+        </td>
+        </tr>
+    }
+
+</table>

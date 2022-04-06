@@ -1,0 +1,237 @@
+﻿@model LPLProject.Models.Task
+
+@{
+    ViewBag.Title = "add_task";
+}
+
+
+<div class="jumbotron text-center tex" id="first">
+    <h2 class="text-capitalize text-danger">Add Task</h2>
+    <p class="text-success"><u>Here you can add tasks to the project.</u></p>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/myscript.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#txtempname").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/getemp/",
+                    data: "{'ename':'" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                })
+            },
+            minlength: 1
+        });
+    });
+</script>
+<style>
+    body {
+        background: url("https://www.publicdomainpictures.net/pictures/130000/velka/textured-background-1442842272xDy.jpg");
+    }
+
+    .form-group {
+        color: aqua;
+        font-size: 20px;
+    }
+
+    #first {
+        background-color: blanchedalmond;
+    }
+
+    #slider {
+        position: relative;
+        left: 100px;
+    }
+
+    #priority {
+        position: relative;
+        left: 10px;
+    }
+
+    #rangenew {
+        position: relative;
+        left: 20px;
+    }
+
+    #getnewvalue {
+        position: relative;
+        left: 30px;
+        height: 40px;
+    }
+
+    .form-control {
+        color: red;
+        height: 40px;
+    }
+
+    #txtempname {
+        height: 40px;
+    }
+    .btn-primary{
+        height:40px;
+    }
+
+    /*  #btnbtn {
+        float: left;
+        width: 60px;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }*/
+    #btnbtn:hover {
+        background: #0b7dda;
+    }
+</style>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Log Out", "logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Add Project", "add_project", "Home")</li>
+                <li>@Html.ActionLink("Add User", "Partial_View", "Home")</li>
+                <li>@Html.ActionLink("Add Task", "add_task", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div style="font-size:25px">
+    @ViewBag.Message </div>
+
+    <div class="form-horizontal">
+        <h4 style="color:darkblue;">Task</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.task_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.task_ID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.task_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project_tname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Project_tname, new { id = "txtempname", name = "ename" })<button type="button" class="btn btn-primary">Search</button>
+
+                @*@Html.DropDownListFor(model => model.Project_tname, new SelectList(ViewBag.list), "Select Project")*@
+                @Html.ValidationMessageFor(model => model.Project_tname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.start_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.start_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.start_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.end_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.end_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.end_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div id="slider" class="form-group">
+            <label id="priority">Priority: </label>  @Html.TextBoxFor(model => model.priority, new { Id = "getnewvalue" })
+            <input type="range" id="rangenew" min="0" max="100" onchange="fetchtask()"><br>
+
+
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.priority, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.priority, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.task_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.task_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.task_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.parent_task, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.parent_task, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.parent_task, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.Project_tname, new SelectList(ViewBag.userlist), "Select User")*@
+                @Html.DropDownListFor(model => model.User, ViewBag.datalist as SelectList, "__Select Employee___", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#txtempname").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Home/getemp/",
+                        data: "{'ename':'" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                    })
+                },
+                minlength: 1
+            });
+        });
+    </script>
+    @*<input type="text" id="txtempname" name="ename" />*@

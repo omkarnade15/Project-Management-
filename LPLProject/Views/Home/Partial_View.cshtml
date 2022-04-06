@@ -1,0 +1,284 @@
+﻿@model  Tuple<LPLProject.Models.Employee, IEnumerable<LPLProject.Models.Employee>>
+@{
+    ViewBag.Title = "Partial_View";
+}
+
+<center>
+    <h2>Add Employee</h2>
+    <h4>Here You can add and edit Employee    </h4>
+</center>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+    body {
+        background-color: lightsalmon;
+    }
+
+    .table {
+        background-color: antiquewhite;
+        padding: 30px 30px 30px 30px
+    }
+
+    h2 {
+        color: yellow;
+        position: center;
+    }
+
+    h4 {
+        font: italic;
+        position: center;
+    }
+
+    .Search {
+        color: brown;
+        font: italic;
+        font-weight: bold;
+    }
+    /* .label {
+            font-size:15px;
+            color: green;
+            font: italic;
+            font-weight: bold;
+        }*/
+
+
+    .form-group {
+        color: white;
+        font-size: 20px;
+    }
+
+    #txtsearch {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 500px;
+        height: 45px;
+        background: #f1f1f1;
+    }
+
+    #btnbtn {
+        float: left;
+        width: 60px;
+        padding: 10px;
+        height: 45px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+        #btnbtn:hover {
+            background: #0b7dda;
+        }
+
+    #getfirstname {
+        color: rebeccapurple;
+    }
+
+    #getlastname {
+        color: rebeccapurple;
+    }
+
+    #getid {
+        color: rebeccapurple;
+    }
+
+    #getusername {
+        color: rebeccapurple;
+    }
+
+    #getpassword {
+        color: rebeccapurple;
+    }
+
+    #confirm_password {
+        color: rebeccapurple;
+    }
+
+    .btn btn-info btn-lg {
+        margin-left: 70px;
+    }
+</style>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Log Out", "logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Add Project", "add_project", "Home")</li>
+                <li>@Html.ActionLink("Add User", "Partial_View", "Home")</li>
+                <li>@Html.ActionLink("Add Task", "add_task", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/myscript.js"></script>
+<script>
+    function checkPasswordMatch() {
+        var password = $("#getpassword").val();
+        var confirmPassword = $("#confirm_password").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch").html("Passwords does not match!");
+        else
+            $("#CheckPasswordMatch").html("Passwords match.");
+    }
+    $(document).ready(function () {
+        $("#confirm_password").keyup(checkPasswordMatch);
+    });
+   </script>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @ViewBag.Message
+<div class="form-horizontal">
+    <h4>Employee</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Item1.first_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Item1.first_Name, new { Id = "getfirstname", name = "firstname" })
+            @Html.ValidationMessageFor(model => model.Item1.first_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Item1.last_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Item1.last_Name, new { Id = "getlastname", name = "lastname" })
+            @Html.ValidationMessageFor(model => model.Item1.last_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Item1.emp_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Item1.emp_ID, new { Id = "getid", @required = "Enter name" })
+            @Html.ValidationMessageFor(model => model.Item1.emp_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Item1.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Item1.Username, new { Id = "getusername", @required = "Enter name" })
+            @Html.ValidationMessageFor(model => model.Item1.Username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Item1.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Item1.Password, new { Id = "getpassword", @required = "Enter name", @type = "password" })
+            @Html.ValidationMessageFor(model => model.Item1.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Item1.confirm_Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Item1.confirm_Password, new { Id = "confirm_password", @required = "Enter name", @type = "password" }) &nbsp;&nbsp;&nbsp;<span class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch"></span>
+            @Html.ValidationMessageFor(model => model.Item1.confirm_Password, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    @*<div class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch"></div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Create" class="btn btn-default" onclick="BtnClick()" />
+                @Html.ActionLink("Send Email To User", "SendEmail", "Home", null, htmlAttributes: new { @class = "btn btn-danger btn-lg" })
+            </div>
+
+        </div>
+    </div>
+
+    }
+
+
+    @*<di>
+            @Html.ActionLink("Back to List", "Index")
+        </di>*@
+    <div class="container">
+        @*<b>Search By:</b>
+            <select id="SearchBy">
+                <option value="fname">First Name</option>
+                <option value="lname">Last Name</option>
+                </select><br><br>*@
+        @*@Html.TextBox("Search")<input type="submit" id="SearchBtn" value=" Search"/><br><br>*@
+        <div>
+            <div>
+                @*<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>*@
+                <table>
+                    <tr>
+                        <td> <input type="text" placeholder="Search" id="txtsearch" class="form-control" />   </td>
+                        <td> <button type="submit" id="btnbtn"><i class="fa fa-search"></i></button></td>
+                    </tr>
+                    <t>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+
+    <table class="table">
+        <tr class="label">
+            <th>
+                First Name
+            </th>
+            <th id="lastname">
+                Last Name
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Item2)
+        {
+            <tr class="Search">
+                <td>
+                    @item.first_Name
+                </td>
+                <td>
+                    @item.last_Name
+                </td>
+                <td>
+                    @Html.ActionLink("Update", "edit_employee", new { id = item.emp_ID }) |
+
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $("#txtsearch").on("keyup", function () {
+            var txtenter = $(this).val();
+            $("table tr").each(function (results) {
+                if (results !== 0) {
+                    var id = $(this).find("td:nth-child(1)").text();
+                    if (id.indexOf(txtenter) !== 0 && id.toLowerCase().indexOf(txtenter.toLowerCase()) < 0) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                }
+            });
+        });
+    </script>

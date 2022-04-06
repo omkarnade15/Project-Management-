@@ -1,0 +1,229 @@
+﻿@model LPLProject.Models.Project
+
+@{
+    ViewBag.Title = "add_project";
+}
+@*<div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Add Project", "add_project", "Home")</li>
+            <li>@Html.ActionLink("Add User", "Partial_View", "Home")</li>
+            <li>@Html.ActionLink("Add Task", "add_task", "Home")</li>
+        </ul>
+    </div>*@<div class="jumbotron text-center tex">
+    <h2 class="text-capitalize text-danger">Add Project</h2>
+    <p class="text-success"><u>Please Add Project Details Below.</u></p>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("#test").toggle();
+        });
+    });
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("#newtest").toggle();
+        });
+    });
+</script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/myscript.js"></script>
+<link href="~/Content/mystyle.css" rel="stylesheet" />
+
+<style>
+    body {
+        background-image: url("C:\Users\Nade\source\repos\LPLProject\LPLProject\background.jpeg");
+    }
+
+    #range {
+        -webkit-appearance: none;
+        width: 600%;
+        height: 15px;
+        border-radius: 5px;
+        background: #ff0000;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+
+    .priority {
+        position: relative;
+        left: 190px;
+    }
+
+    #manager {
+        position: relative;
+        left: 190px;
+    }
+
+    .myclass {
+        width: 300px;
+        margin-left: 100px;
+    }
+
+    .slider {
+        position: relative;
+        left: 190px;
+        right: 60px;
+    }
+
+    .form-horizontal {
+        margin-left: 100px;
+    }
+
+    .btn-danger {
+        margin-left: 190px;
+    }
+
+    .search {
+        margin-left: 190px;
+    }
+
+    .text-info {
+        margin-left: 140px;
+    }
+
+    .btn-warning {
+        margin-left: 180px;
+    }
+</style>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Log Out", "logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Add Project", "add_project", "Home")</li>
+                <li>@Html.ActionLink("Add User", "Partial_View", "Home")</li>
+                <li>@Html.ActionLink("Add Task", "add_task", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function disablePrev() { window.history.forward() }
+        window.onload = disablePrev();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+    });
+</script>
+<div style="color:green">
+    @ViewBag.Message
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Project</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Project_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Name Of Project" } })
+                @Html.ValidationMessageFor(model => model.Project_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br>
+        <div>
+            <button class="btn btn-warning">Set Start and End Date</button>
+        </div>
+        <br>
+        <div class="form-group" id="test" hidden>
+            @Html.LabelFor(model => model.Start_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Start_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Start_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="newtest" hidden>
+            @Html.LabelFor(model => model.End_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.End_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.End_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div id="slider" class="form-group">
+        <label class="priority">Priority: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.TextBoxFor(model => model.Priority, new { Id = "getvalue" })
+
+        <input type="range" class="slider" id="range" min="0" max="100" onchange="fetch()"><br>
+
+
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group" id="manager">
+        @Html.LabelFor(model => model.Manager@*, htmlAttributes: new { @class = "control-label col-md-2" }*@) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @Html.DropDownListFor(model => model.Manager, new SelectList(ViewBag.list), "Select Manager", new { @id = "mydropdown" })
+        <div class="col-md-10" id="managerlist">
+            @*@Html.DropDownListFor(model => model.Manager, new SelectList(ViewBag.list), "Select Manager", new { @id = "mydropdown", @class = "myclass" })*@
+
+            @Html.ValidationMessageFor(model => model.Manager, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.number_of_Tasks, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.number_of_Tasks, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.number_of_Tasks, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group ">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Project" class="btn btn-danger" />
+        </div>
+    </div>
+    <br>
+
+}
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+<br>
+<br>
+<br>
+<div class="search">
+
+    <p class="text-info" style="font-size:20px">To search and update Project Details.</p>&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("Project Details", "search_project", "Home", null, htmlAttributes: new { @class = "btn btn-danger btn-lg" })
+</div>
+
+@*<div>
+        @Html.ActionLink("Add User", "Partial_View")
+    </div>*@

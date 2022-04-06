@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "select_Role";
+}
+
+<h2></h2>
+<style>
+    body {
+        background: url("https://images.unsplash.com/photo-1556379092-dca659792591?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjExMzk2fQ&auto=format&fit=crop&w=1489&q=80");
+    }
+    .text-capitalize{
+        font-size:45px;
+        color:white;
+    }
+    .myclass{
+        width:250px;
+        height:45px;
+    }
+</style>
+<center class="full">
+    @if (ViewBag.Message != null)
+    {
+        <b class="text text-danger">
+            @ViewBag.Message
+        </b>
+    }
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        
+         
+                    <b class="text-capitalize">Choose User Type:</b>
+             
+                    @Html.DropDownList("UserRole", new List<SelectListItem>
+                    {
+                        new SelectListItem{Text="Manager",Value="Manager"},
+                        new SelectListItem{Text="Associate",Value="Associate"},
+
+                    }, "Select Role...", new { @id = "mydropdown", @class = "myclass" })
+            
+                    <button type="submit" name="btnSubmit" class="btn-warning text-danger btn-lg">Select</button>
+           
+    }
+</center>
+
+
+
+
+
+
